@@ -1,18 +1,16 @@
 /* eslint-disable @next/next/no-img-element */
-import { useState } from 'react'
-import Typography from '@mui/material/Typography'
-import Link from '@mui/material/Link'
-import type { NextPage } from 'next'
-import Image from 'next/image'
-import { useForm } from 'react-hook-form'
-import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
-import Grid from '@mui/material/Grid'
-import TextField from '@mui/material/TextField'
 import Alert from '@mui/material/Alert'
 import Button from '@mui/material/Button'
-import { FiLogIn, FiEye, FiEyeOff } from 'react-icons/fi'
-import { Stack } from '@mui/material'
+import Grid from '@mui/material/Grid'
+import Link from '@mui/material/Link'
+import TextField from '@mui/material/TextField'
+import Typography from '@mui/material/Typography'
+import type { NextPage } from 'next'
+import { useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { FiEye, FiEyeOff, FiLogIn } from 'react-icons/fi'
+import * as yup from 'yup'
 
 const Home: NextPage = () => {
   const [showPassword, setShowPassword] = useState(false)
@@ -71,7 +69,7 @@ const Home: NextPage = () => {
               <TextField
                 fullWidth
                 label='Password'
-                type={showPassword && 'password'}
+                type={showPassword ? 'password' : 'text'}
                 InputProps={{
                   endAdornment: showPassword ? (
                     <FiEye
