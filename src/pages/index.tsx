@@ -67,7 +67,7 @@ const Home: NextPage = () => {
       }}
       container
     >
-      <Grid item xs={3.4} m={9} ml={14}>
+      <Grid item md={3.3} xs={12} m={{ md: 9, xs: 3 }} ml={14}>
         <img
           alt='logo mypharma'
           src='/images/logo.png'
