@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
+import { useState } from 'react'
 import Typography from '@mui/material/Typography'
 import Link from '@mui/material/Link'
 import type { NextPage } from 'next'
@@ -10,10 +11,11 @@ import Grid from '@mui/material/Grid'
 import TextField from '@mui/material/TextField'
 import Alert from '@mui/material/Alert'
 import Button from '@mui/material/Button'
-import { FiLogIn } from 'react-icons/fi'
+import { FiLogIn, FiEye, FiEyeOff } from 'react-icons/fi'
 import { Stack } from '@mui/material'
 
 const Home: NextPage = () => {
+  const [showPassword, setShowPassword] = useState(false)
   const schema = yup
     .object({
       email: yup.string().email().required('email obrigatório'),
@@ -50,7 +52,7 @@ const Home: NextPage = () => {
           height='40px'
           style={{ marginTop: '24px' }}
         />
-        <Typography variant='h1' mt='24px' sx={{maxWidth: '300px'}}>
+        <Typography variant='h1' mt='24px' sx={{ maxWidth: '300px' }}>
           Vamos mudar a forma como voçê gerencia seus produtos e medicamentos!
           <br />
           <Link>começe criando uma conta!</Link>
@@ -69,7 +71,20 @@ const Home: NextPage = () => {
               <TextField
                 fullWidth
                 label='Password'
-                type='password'
+                type={showPassword && 'password'}
+                InputProps={{
+                  endAdornment: showPassword ? (
+                    <FiEye
+                      style={{ cursor: 'pointer' }}
+                      onClick={() => setShowPassword(false)}
+                    />
+                  ) : (
+                    <FiEyeOff
+                      style={{ cursor: 'pointer' }}
+                      onClick={() => setShowPassword(true)}
+                    />
+                  ),
+                }}
                 {...register('password')}
               />
               {errors.password && (
