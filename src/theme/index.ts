@@ -3,11 +3,12 @@ import { createTheme } from '@mui/material'
 export const theme = createTheme({
   palette: {
     primary: {
-      main: '#7B61FF'
+      main: '#7B61FF',
     },
     text: {
       primary: '#FFFFFF71',
     },
+
     secondary: {
       main: '#ffffff',
     },
@@ -19,15 +20,10 @@ export const theme = createTheme({
     MuiTypography: {
       styleOverrides: {
         h1: {
-          fontSize: '24px',
-          fontWeight: '300',
-          color: '#000',
-        },
-        subtitle1: {
-          fontSize: '13px',
-          fontWeight: '300',
-          color: '#666666',
-          lineHeight: '20px',
+          fontSize: '14px',
+          fontWeight: '500',
+          color: '#B9B9BB',
+          lineHeight: '165.7%'
         },
       },
     },
@@ -59,6 +55,13 @@ export const theme = createTheme({
           boxShadow: 'none',
           ':hover': {
             boxShadow: 'none',
+            cursor: 'pointer'
+          },
+          '&:disabled': {
+            background: '#7B61FF50',
+            color: '#ffffff50',
+            cursor: 'not-allowed'
+          
           },
         },
       },
@@ -66,20 +69,21 @@ export const theme = createTheme({
     MuiInputBase: {
       styleOverrides: {
         root: {
-          maxHeight: '52px',
-          border: 'none',
+          maxHeight: '46px',
           outline: 'none',
-          background: '#F0F0F0',
+          background: '#1D1C23',
+          borderRadius: '8px',
+          border: '1px solid #292832',
         },
       },
     },
     MuiInputLabel: {
       styleOverrides: {
         root: {
-          fontSize: '13px',
+          fontSize: '12px',
           fontWeight: 500,
-          color: '#292929',
-          paddingTop: '2px',
+          color: '#ffffff71',
+          paddingTop: '-1px',
         },
       },
     },
