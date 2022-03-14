@@ -1,6 +1,7 @@
 import { ThemeProvider, GlobalStyles } from '@mui/material'
 import type { AppProps } from 'next/app'
 import { theme } from 'theme'
+import { storeWrapper } from 'redux/store'
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -19,5 +20,4 @@ function MyApp({ Component, pageProps }: AppProps) {
     </ThemeProvider>
   )
 }
-
-export default MyApp
+export default storeWrapper.withRedux(MyApp)
