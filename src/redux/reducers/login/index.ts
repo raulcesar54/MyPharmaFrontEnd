@@ -2,10 +2,10 @@ import { HYDRATE } from 'next-redux-wrapper'
 import { USER_LOGIN } from 'redux/actions'
 
 const initialState = {
+  id: '',
   email: '',
-  password: '',
+  token: ''
 }
-
 const reducer = (state = initialState, action: any) => {
   switch (action.type) {
     case HYDRATE:
