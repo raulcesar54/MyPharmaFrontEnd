@@ -23,7 +23,7 @@ export const theme = createTheme({
           fontSize: '14px',
           fontWeight: '500',
           color: '#B9B9BB',
-          lineHeight: '165.7%'
+          lineHeight: '165.7%',
         },
       },
     },
@@ -35,9 +35,9 @@ export const theme = createTheme({
           color: '#000',
         },
         primary: {
-          fontSize: '14px',
-          fontWeight: 'bolder',
-          textTransform: 'uppercase',
+          fontSize: '13px',
+          color: '#ffffff70',
+          fontWeight: 'bold',
         },
       },
     },
@@ -55,13 +55,12 @@ export const theme = createTheme({
           boxShadow: 'none',
           ':hover': {
             boxShadow: 'none',
-            cursor: 'pointer'
+            cursor: 'pointer',
           },
           '&:disabled': {
             background: '#7B61FF50',
             color: '#ffffff50',
-            cursor: 'not-allowed'
-          
+            cursor: 'not-allowed',
           },
         },
       },
@@ -84,6 +83,14 @@ export const theme = createTheme({
           fontWeight: 500,
           color: '#ffffff71',
           paddingTop: '-1px',
+        },
+      },
+    },
+    MuiCard: {
+      styleOverrides: {
+        root: {
+          backgroundColor: '#292832',
+          borderRadius: '16px',
         },
       },
     },

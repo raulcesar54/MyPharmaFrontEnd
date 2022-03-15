@@ -1,16 +1,14 @@
 import { HYDRATE } from 'next-redux-wrapper'
-import { USER_LOGIN } from 'redux/actions'
+import { MARK } from 'redux/actions'
 
 const initialState = {
-  id: '',
-  email: '',
-  token: ''
+  name: '',
 }
 const reducer = (state = initialState, action: any) => {
   switch (action.type) {
     case HYDRATE:
-      return { ...state, ...action.payload.user }
-    case USER_LOGIN:
+      return { ...state, ...action.payload.mark }
+    case MARK:
       const newState = { ...state, ...action.payload }
       return newState
     default:

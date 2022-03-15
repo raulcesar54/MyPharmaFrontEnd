@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
-import login from 'redux/reducers/login'
+import mark from 'redux/reducers/mark'
 
 export default combineReducers({
-  login,
+  mark,
 })
