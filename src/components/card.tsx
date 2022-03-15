@@ -1,5 +1,13 @@
-import { Card, CardContent, CardHeader, Typography } from '@mui/material'
+import {
+  Button,
+  Card,
+  CardContent,
+  CardHeader,
+  IconButton,
+  Typography,
+} from '@mui/material'
 import { ReactNode } from 'react'
+import { FiActivity } from 'react-icons/fi'
 
 interface Card {
   title: string
@@ -17,6 +25,20 @@ export const CardComponent = ({ title, children, maxWidth = 264 }: Card) => {
           fontWeight: 'bold',
           color: '#fff',
         }}
+        action={
+          <Button
+            sx={{
+              marginRight: '8px',
+              maxHeight: '19px',
+              minWidth: '36px',
+              fontSize: '11px',
+              borderRadius: '4px',
+            }}
+            variant='contained'
+          >
+            +
+          </Button>
+        }
       />
       <CardContent>{children}</CardContent>
     </Card>
