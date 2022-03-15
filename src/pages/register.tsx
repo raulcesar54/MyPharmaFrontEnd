@@ -1,20 +1,19 @@
 /* eslint-disable @next/next/no-img-element */
+import { yupResolver } from '@hookform/resolvers/yup'
 import Alert from '@mui/material/Alert'
 import Button from '@mui/material/Button'
 import Grid from '@mui/material/Grid'
 import Link from '@mui/material/Link'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
-import * as yup from 'yup'
 import type { NextPage } from 'next'
-import { api } from 'services'
-import { yupResolver } from '@hookform/resolvers/yup'
+import { useRouter } from 'next/router'
 import { useSnackbar } from 'notistack'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { FiEye, FiEyeOff, FiLogIn } from 'react-icons/fi'
-import { useSelector } from 'react-redux'
-import { useRouter } from 'next/router'
+import { FiEye, FiEyeOff } from 'react-icons/fi'
+import { api } from 'services'
+import * as yup from 'yup'
 
 interface SaveProps {
   email: string
@@ -60,7 +59,6 @@ const Home: NextPage = () => {
       enqueueSnackbar('Senha ou Email incorreto!', { variant: 'error' })
     }
   }
-  const select = useSelector((e) => console.log(e))
   return (
     <Grid
       sx={{
@@ -152,7 +150,7 @@ const Home: NextPage = () => {
                 sx={{ minHeight: '52px' }}
                 fullWidth
               >
-                <FiLogIn size={13} />
+                Cadastrar
               </Button>
             </Grid>
           </Grid>

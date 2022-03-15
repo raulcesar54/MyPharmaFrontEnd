@@ -8,13 +8,13 @@ import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
 import type { GetServerSideProps, NextPage } from 'next'
 import { useRouter } from 'next/router'
+import { parseCookies, setCookie } from 'nookies'
 import { useSnackbar } from 'notistack'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { FiEye, FiEyeOff, FiLogIn } from 'react-icons/fi'
 import { api } from 'services'
 import * as yup from 'yup'
-import { parseCookies, setCookie, destroyCookie } from 'nookies'
 
 const Home: NextPage = () => {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar()
@@ -51,6 +51,7 @@ const Home: NextPage = () => {
       enqueueSnackbar('Bem vindo!', { variant: 'success' })
       const convertJsonToString = JSON.stringify(data)
       setCookie(null, 'auth:token', convertJsonToString)
+      push('/dashboard')
     } catch (err) {
       closeSnackbar()
       enqueueSnackbar('Senha ou Email incorreto!', { variant: 'error' })
@@ -138,10 +139,15 @@ const Home: NextPage = () => {
 }
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  console.log(ctx.req)
-
+  const { 'auth:token': token } = parseCookies(ctx)
+  if (!token) {
+    return { props: {} }
+  }
   return {
-    props: {},
+    redirect: {
+      destination: '/dashboard',
+      permanent: false,
+    },
   }
 }
 
