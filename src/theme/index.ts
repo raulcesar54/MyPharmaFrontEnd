@@ -41,6 +41,20 @@ export const theme = createTheme({
         },
       },
     },
+    MuiDialog: {
+      styleOverrides: {
+        root: {
+          background: '#7B61FF80'
+        }
+      }
+    },
+    MuiDialogContent: {
+      styleOverrides: {
+        root: {
+          background: 'transparent'
+        }
+      }
+    },
     MuiButton: {
       styleOverrides: {
         text: {

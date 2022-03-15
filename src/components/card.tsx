@@ -1,21 +1,19 @@
-import {
-  Button,
-  Card,
-  CardContent,
-  CardHeader,
-  IconButton,
-  Typography,
-} from '@mui/material'
+import { Button, Card, CardContent, CardHeader } from '@mui/material'
 import { ReactNode } from 'react'
-import { FiActivity } from 'react-icons/fi'
 
 interface Card {
   title: string
   maxWidth?: number
   children?: ReactNode
+  onClick: () => void
 }
 
-export const CardComponent = ({ title, children, maxWidth = 264 }: Card) => {
+export const CardComponent = ({
+  title,
+  children,
+  maxWidth = 264,
+  onClick,
+}: Card) => {
   return (
     <Card sx={{ maxWidth: maxWidth }}>
       <CardHeader
@@ -34,6 +32,7 @@ export const CardComponent = ({ title, children, maxWidth = 264 }: Card) => {
               fontSize: '11px',
               borderRadius: '4px',
             }}
+            onClick={onClick}
             variant='contained'
           >
             +
