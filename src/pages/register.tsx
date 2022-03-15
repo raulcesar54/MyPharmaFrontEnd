@@ -1,29 +1,40 @@
 /* eslint-disable @next/next/no-img-element */
-import { yupResolver } from '@hookform/resolvers/yup'
 import Alert from '@mui/material/Alert'
 import Button from '@mui/material/Button'
 import Grid from '@mui/material/Grid'
 import Link from '@mui/material/Link'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
+import * as yup from 'yup'
 import type { NextPage } from 'next'
+import { api } from 'services'
+import { yupResolver } from '@hookform/resolvers/yup'
+import { useSnackbar } from 'notistack'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { FiEye, FiEyeOff, FiLogIn } from 'react-icons/fi'
 import { useSelector } from 'react-redux'
-import { api } from 'services'
-import * as yup from 'yup'
-import { SnackbarProvider, VariantType, useSnackbar } from 'notistack'
 import { useRouter } from 'next/router'
 
+interface SaveProps {
+  email: string
+  password: string
+  name: string
+}
+
 const Home: NextPage = () => {
-  const { enqueueSnackbar, closeSnackbar } = useSnackbar()
   const [showPassword, setShowPassword] = useState(true)
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar()
   const { push } = useRouter()
   const schema = yup
     .object({
       email: yup.string().email().required('email obrigatório'),
-      password: yup.string().required(),
+      name: yup.string().required('campo obrigatório'),
+      password: yup.string().required('campo obrigatório'),
+      confirmPassword: yup
+        .string()
+        .required('campo obrigatório')
+        .oneOf([yup.ref('password'), null], 'As senhas não são iguais'),
     })
     .required()
 
@@ -35,26 +46,21 @@ const Home: NextPage = () => {
     resolver: yupResolver(schema),
     mode: 'all',
   })
-  async function handleSubmit(values: { email: string; password: string }) {
-    enqueueSnackbar('Fazendo login!', { variant: 'info' })
+  async function handleSubmit(values: SaveProps) {
+    enqueueSnackbar('Criando usuario!', { variant: 'info' })
     try {
-      const { data } = await api.post<{
-        data: {
-          token: string
-          user: {
-            id: string
-            email: string
-          }
-        }
-      }>('/auth', values)
-      console.log(data?.data.token)
+      await api.post('/user', values)
       closeSnackbar()
-      enqueueSnackbar('Bem vindo!', { variant: 'success' })
+      enqueueSnackbar('Novo usuario criado com sucesso!', {
+        variant: 'success',
+      })
+      push('/')
     } catch (err) {
       closeSnackbar()
       enqueueSnackbar('Senha ou Email incorreto!', { variant: 'error' })
     }
   }
+  const select = useSelector((e) => console.log(e))
   return (
     <Grid
       sx={{
@@ -63,6 +69,7 @@ const Home: NextPage = () => {
         backgroundPosition: 'right',
         backgroundRepeat: 'no-repeat',
         width: '100vw',
+        overflowX: 'hidden',
         height: '100vh',
       }}
       container
@@ -78,12 +85,18 @@ const Home: NextPage = () => {
         <Typography variant='h1' mt='24px' sx={{ maxWidth: '300px' }}>
           Vamos mudar a forma como voçê gerencia seus produtos e medicamentos!
           <br />
-          <Link onClick={() => push('/register')}>
-            começe criando uma conta!
-          </Link>
+          <Link onClick={() => push('/')}>começe criando uma conta!</Link>
         </Typography>
         <form style={{ marginTop: '24px' }} onSubmit={submit(handleSubmit)}>
           <Grid container mt={4} gap='24px'>
+            <Grid item xs={12} gap={1}>
+              <TextField fullWidth label='Nome' {...register('name')} />
+              {errors.name && (
+                <Alert severity='error' sx={{ marginTop: '8px' }}>
+                  {errors.name?.message}
+                </Alert>
+              )}
+            </Grid>
             <Grid item xs={12} gap={1}>
               <TextField fullWidth label='Email' {...register('email')} />
               {errors.email && (
@@ -95,7 +108,7 @@ const Home: NextPage = () => {
             <Grid item xs={12} gap={1}>
               <TextField
                 fullWidth
-                label='Password'
+                label='Senha'
                 type={showPassword ? 'password' : 'text'}
                 InputProps={{
                   endAdornment: showPassword ? (
@@ -115,6 +128,19 @@ const Home: NextPage = () => {
               {errors.password && (
                 <Alert severity='error' sx={{ marginTop: '8px' }}>
                   {errors.password?.message}
+                </Alert>
+              )}
+            </Grid>
+            <Grid item xs={12} gap={1}>
+              <TextField
+                fullWidth
+                label='Confirmar senha'
+                type={showPassword ? 'password' : 'text'}
+                {...register('confirmPassword')}
+              />
+              {errors.confirmPassword && (
+                <Alert severity='error' sx={{ marginTop: '8px' }}>
+                  {errors.confirmPassword?.message}
                 </Alert>
               )}
             </Grid>
