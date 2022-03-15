@@ -6,15 +6,15 @@ import Grid from '@mui/material/Grid'
 import Link from '@mui/material/Link'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
-import type { NextPage } from 'next'
+import type { GetServerSideProps, NextPage } from 'next'
+import { useRouter } from 'next/router'
+import { useSnackbar } from 'notistack'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { FiEye, FiEyeOff, FiLogIn } from 'react-icons/fi'
-import { useSelector } from 'react-redux'
 import { api } from 'services'
 import * as yup from 'yup'
-import { SnackbarProvider, VariantType, useSnackbar } from 'notistack'
-import { useRouter } from 'next/router'
+import { parseCookies, setCookie, destroyCookie } from 'nookies'
 
 const Home: NextPage = () => {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar()
@@ -47,9 +47,10 @@ const Home: NextPage = () => {
           }
         }
       }>('/auth', values)
-      console.log(data?.data.token)
       closeSnackbar()
       enqueueSnackbar('Bem vindo!', { variant: 'success' })
+      const convertJsonToString = JSON.stringify(data)
+      setCookie(null, 'auth:token', convertJsonToString)
     } catch (err) {
       closeSnackbar()
       enqueueSnackbar('Senha ou Email incorreto!', { variant: 'error' })
@@ -134,6 +135,14 @@ const Home: NextPage = () => {
       </Grid>
     </Grid>
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  console.log(ctx.req)
+
+  return {
+    props: {},
+  }
 }
 
 export default Home
