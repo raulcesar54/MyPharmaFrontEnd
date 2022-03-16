@@ -3,7 +3,7 @@ import { ReactNode } from 'react'
 
 interface Card {
   title: string
-  maxWidth?: number
+  maxWidth?: number | string
   children?: ReactNode
   onClick: () => void
 }

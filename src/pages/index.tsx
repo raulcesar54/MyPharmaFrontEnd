@@ -45,8 +45,10 @@ const Home: NextPage = () => {
             id: string
             email: string
           }
+          done?: boolean
         }
       }>('/auth', values)
+      if (!data?.done) throw 'Email ou senha incorreto!'
       closeSnackbar()
       enqueueSnackbar('Bem vindo!', { variant: 'success' })
       const convertJsonToString = JSON.stringify(data)

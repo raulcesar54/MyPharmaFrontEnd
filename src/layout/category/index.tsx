@@ -98,10 +98,10 @@ export const CategoryCard = ({ data }: Category) => {
 
   return (
     <>
-      <CardComponent title='Marca' onClick={() => setOpenModal(true)}>
+      <CardComponent title='Categorias de produto' onClick={() => setOpenModal(true)}>
         <TextField
           fullWidth
-          label='buscar marca'
+          label='buscar categorias'
           onChange={(event) => handleFilterInformation(event.target.value)}
         />
         <List>
