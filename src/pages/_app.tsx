@@ -1,7 +1,6 @@
 import { GlobalStyles, ThemeProvider } from '@mui/material'
 import type { AppProps } from 'next/app'
 import { SnackbarProvider } from 'notistack'
-import { storeWrapper } from 'redux/store'
 import { theme } from 'theme'
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -23,4 +22,4 @@ function MyApp({ Component, pageProps }: AppProps) {
     </SnackbarProvider>
   )
 }
-export default storeWrapper.withRedux(MyApp)
+export default MyApp

@@ -21,15 +21,16 @@ import { useForm } from 'react-hook-form'
 import { FiTrash } from 'react-icons/fi'
 import { api } from 'services'
 import * as yup from 'yup'
-import { Mark } from './types'
+import { Category } from './types'
 
-export const MarkCard = ({ data }: Mark) => {
+export const CategoryCard = ({ data }: Category) => {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar()
-  const [marks, setMarks] = useState(data || [])
+  const [category, setCategories] = useState(data || [])
   const [openModal, setOpenModal] = useState(false)
   const schema = yup
     .object({
       name: yup.string().required('nome é obrigatório!'),
+      description: yup.string().required('descrição é obrigatório!'),
     })
     .required()
 
@@ -49,9 +50,9 @@ export const MarkCard = ({ data }: Mark) => {
   }
   async function handleGetMarks() {
     try {
-      const { data: markGetFromApi } = await api.get<Mark>('/mark')
+      const { data: markGetFromApi } = await api.get<Category>('/product/category')
       if (markGetFromApi) {
-        setMarks(markGetFromApi?.data || [])
+        setCategories(markGetFromApi?.data || [])
       }
     } catch (err) {
       console.log(err)
@@ -63,7 +64,7 @@ export const MarkCard = ({ data }: Mark) => {
     )
     if (!confirm) return
     try {
-      await api.delete(`/mark/${id}`)
+      await api.delete(`/product/category/${id}`)
       handleGetMarks()
     } catch (err) {
       console.log(err)
@@ -71,27 +72,27 @@ export const MarkCard = ({ data }: Mark) => {
   }
   async function handleFilterInformation(key: string) {
     try {
-      const { data: markGetFromApi } = await api.get<Mark>(
-        `/mark?search=${key}`
+      const { data: markGetFromApi } = await api.get<Category>(
+        `/product/category?search=${key}`
       )
       if (markGetFromApi) {
-        setMarks(markGetFromApi?.data || [])
+        setCategories(markGetFromApi?.data || [])
       }
     } catch (err) {
       console.log(err)
     }
   }
   async function handleSubmit(values: { email: string; password: string }) {
-    enqueueSnackbar('Fazendo login!', { variant: 'info' })
+    enqueueSnackbar('Salvando categoria!', { variant: 'info' })
     try {
-      await api.post('/mark', values)
+      await api.post('/product/category', values)
       closeSnackbar()
-      enqueueSnackbar('Bem vindo!', { variant: 'success' })
+      enqueueSnackbar('Categoria salva com sucesso!', { variant: 'success' })
       hadleCloseModal()
       handleGetMarks()
     } catch (err) {
       closeSnackbar()
-      enqueueSnackbar('Senha ou Email incorreto!', { variant: 'error' })
+      enqueueSnackbar('Ocorreu um erro!', { variant: 'error' })
     }
   }
 
@@ -104,7 +105,7 @@ export const MarkCard = ({ data }: Mark) => {
           onChange={(event) => handleFilterInformation(event.target.value)}
         />
         <List>
-          {marks.map(({ name, _id }) => {
+          {category.map(({ name, _id }) => {
             return (
               <ListItem
                 disablePadding
@@ -159,6 +160,18 @@ export const MarkCard = ({ data }: Mark) => {
                   {errors.name && (
                     <Alert severity='error' sx={{ marginTop: '8px' }}>
                       {errors.name?.message}
+                    </Alert>
+                  )}
+                </Grid>
+                <Grid item xs={12} gap={1}>
+                  <TextField
+                    fullWidth
+                    label='Descrição'
+                    {...register('description')}
+                  />
+                  {errors.description && (
+                    <Alert severity='error' sx={{ marginTop: '8px' }}>
+                      {errors.description?.message}
                     </Alert>
                   )}
                 </Grid>

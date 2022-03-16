@@ -1,12 +1,15 @@
-import { Mark } from 'layout'
+import { Mark, Category } from 'layout'
 import { GetServerSideProps } from 'next'
 import { parseCookies } from 'nookies'
-import { useDispatch } from 'react-redux'
 import { api } from 'services'
 
 const Dashboard = ({ mark, productCategory, product }: any) => {
-  console.log({ mark, productCategory, product })
-  return <Mark {...mark} />
+  return (
+    <>
+      <Mark {...mark} />
+      <Category {...productCategory} />
+    </>
+  )
 }
 
 export default Dashboard
